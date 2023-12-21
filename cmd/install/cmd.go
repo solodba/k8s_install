@@ -18,7 +18,9 @@ type Server struct {
 
 // k8s服务结构体初始化函数
 func NewServer() *Server {
-	return &Server{}
+	return &Server{
+		K8sInstallSvc: protocol.Newk8sInstallSvc(),
+	}
 }
 
 // 项目启动子命令
