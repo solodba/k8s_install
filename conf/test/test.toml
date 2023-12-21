@@ -26,7 +26,7 @@ kubeadm_version="1.26.3-00"
 kubelet_version="1.26.3-00"
 kubectl_version="1.26.3-00"
 download_image_script="images-down.sh"
-apiserver_address="192.168.0.184"
+apiserver_address="192.168.0.131"
 apiserver_port=6443
 version="v1.26.3"
 pod_network="10.100.0.0/16"
@@ -35,18 +35,18 @@ service_dns_domain="cluster.local"
 
 [master]
 sys_username = "root"
-sys_password = "Hu_900515"
-sys_host = "8.148.11.1"
+sys_password = "Root@123"
+sys_host = "8.148.12.129"
 sys_port = 22
 
 [node1]
 sys_username = "root"
-sys_password = "Hu_900515"
-sys_host = "8.148.10.57"
+sys_password = "Root@123"
+sys_host = "8.148.11.1"
 sys_port = 22
 
 [node2]
 sys_username = "root"
-sys_password = "Hu_900515"
-sys_host = "8.148.12.129"
+sys_password = "Root@123"
+sys_host = "8.148.10.57"
 sys_port = 22
