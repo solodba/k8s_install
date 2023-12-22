@@ -1,6 +1,8 @@
 package conf
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 全局配置
 var (
@@ -27,6 +29,7 @@ type Config struct {
 
 // Docker结构体
 type Docker struct {
+	BaseDir               string `toml:"base_dir" env:"DOCKER_BASE_DIR"`
 	Dir                   string `toml:"dir" env:"DOCKER_DIR"`
 	LimitsFile            string `toml:"limits_file" env:"DOCKER_LIMITS_FILE"`
 	SysctlFile            string `toml:"sysctl_file" env:"DOCKER_SYSCTL_FILE"`
@@ -37,18 +40,24 @@ type Docker struct {
 	DockerBinaryFile      string `toml:"docker_binary_file" env:"DOCKER_BINARY_FILE"`
 	DockerUser            string `toml:"docker_user" env:"DOCKER_USER"`
 	ContainerdServiceFile string `toml:"containerd_service_file" env:"CONTAINERD_SERVICE_FILE"`
+	CompressInstallFile   string `toml:"compress_install_file" env:"DOCKER_COMPRESS_INSTALL_FILE"`
 }
 
 // Containerd结构体
 type Containerd struct {
+	BaseDir              string `toml:"base_dir" env:"CONTAINERD_BASE_DIR"`
 	Dir                  string `toml:"dir" env:"CONTAINERD_DIR"`
+	LimitsFile           string `toml:"limits_file" env:"CONTAINERD_LIMITS_FILE"`
+	SysctlFile           string `toml:"sysctl_file" env:"CONTAINERD_SYSCTL_FILE"`
 	ContainerdFile       string `toml:"containerd_file" env:"CONTAINERD_FILE"`
 	ContainerdConfigFile string `toml:"containerd_config_file" env:"CONTAINERD_CONFIG_FILE"`
 	NerdctlFile          string `toml:"nerdctl_file" env:"CONTAINERD_NERDCTL_FILE"`
 	NerdctlConfigFile    string `toml:"nerdctl_config_file" env:"CONTAINERD_NERDCTL_CONFIG_FILE"`
-	CniFile              string `tomL:"cni_file" env:"CONTAINERD_CNI_FILE"`
+	CniFile              string `toml:"cni_file" env:"CONTAINERD_CNI_FILE"`
 	RuncFile             string `toml:"runc_file" env:"CONTAINERD_RUNC_FILE"`
 	IpvsModuleFile       string `toml:"ipvs_module_file" env:"CONTAINERD_IPVS_MODULE_FILE"`
+	CompressInstallFile  string `toml:"compress_install_file" env:"CONTAINERD_COMPRESS_INSTALL_FILE"`
+	ServiceFile          string `toml:"service_file" env:"CONTAINERD_SERVICE_FILE"`
 }
 
 // k8s结构体
@@ -165,7 +174,19 @@ func (m *Docker) ContainerdServiceFilePath() string {
 	return fmt.Sprintf("%s/%s", m.Dir, m.ContainerdServiceFile)
 }
 
+func (m *Docker) DockerCompressInstallFilePath() string {
+	return fmt.Sprintf("%s/%s", m.BaseDir, m.CompressInstallFile)
+}
+
 // 获取Containerd文件路径
+func (m *Containerd) LimitsFilePath() string {
+	return fmt.Sprintf("%s/%s", m.Dir, m.LimitsFile)
+}
+
+func (m *Containerd) SysctlFilePath() string {
+	return fmt.Sprintf("%s/%s", m.Dir, m.SysctlFile)
+}
+
 func (m *Containerd) ContainerdFilePath() string {
 	return fmt.Sprintf("%s/%s", m.Dir, m.ContainerdFile)
 }
@@ -192,6 +213,14 @@ func (m *Containerd) IpvsModuleFilePath() string {
 
 func (m *Containerd) ContainerdConfigFilePath() string {
 	return fmt.Sprintf("%s/%s", m.Dir, m.ContainerdConfigFile)
+}
+
+func (m *Containerd) ContainerdCompressInstallFilePath() string {
+	return fmt.Sprintf("%s/%s", m.BaseDir, m.CompressInstallFile)
+}
+
+func (m *Containerd) ContainerdServiceFilePath() string {
+	return fmt.Sprintf("%s/%s", m.Dir, m.ServiceFile)
 }
 
 // 获取k8s下载镜像脚本

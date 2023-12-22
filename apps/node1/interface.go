@@ -9,12 +9,16 @@ const (
 
 // k8s安装程序接口
 type Service interface {
-	// 上传docker安装文件
-	UploadDockerInstallFile(context.Context) error
+	// 上传docker压缩安装文件
+	UploadDockerCompressInstallFile(context.Context) error
+	// 解压docker压缩安装文件
+	UncompressDockerInstallFIle(context.Context) error
 	// docker安装
 	UbuntuDockerInstall(context.Context) error
-	// 上传containerd安装文件
-	UploadContainerdInstallFile(context.Context) error
+	// 上传containerd压缩文件文件
+	UploadContainerdCompressInstallFile(context.Context) error
+	// 解压Containerd压缩安装文件
+	UncompressContainerdInstallFIle(context.Context) error
 	// containerd安装
 	UbuntuContainerdInstall(context.Context) error
 	// 安装kubeadm、kubectl、kubelet

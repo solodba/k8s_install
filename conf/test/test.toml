@@ -1,5 +1,6 @@
 [docker]
-dir="/usr/local/src"
+base_dir="/usr/local/src"
+dir="/usr/local/src/docker"
 limits_file="limits.conf"
 sysctl_file="sysctl.conf"
 docker_service_file="docker.service"
@@ -9,9 +10,13 @@ docker_daemon_file="daemon.json"
 docker_binary_file="docker-20.10.19.tgz"
 docker_user="docker"
 containerd_service_file="containerd.service"
+compress_install_file="docker.tar.gz"
 
 [containerd]
-dir="/usr/local/src"
+base_dir="/usr/local/src"
+dir="/usr/local/src/containerd"
+limits_file="limits.conf"
+sysctl_file="sysctl.conf"
 containerd_file="containerd-1.6.20-linux-amd64.tar.gz"
 containerd_config_file="config.toml"
 nerdctl_file="nerdctl-1.3.0-linux-amd64.tar.gz"
@@ -19,14 +24,16 @@ nerdctl_config_file="nerdctl.toml"
 cni_file="cni-plugins-linux-amd64-v1.2.0.tgz"
 runc_file="runc.amd64"
 ipvs_module_file="modules.conf"
+compress_install_file="containerd.tar.gz"
+service_file="containerd.service"
 
 [k8s]
-dir="/usr/local/src"
+dir="/usr/local/src/containerd"
 kubeadm_version="1.26.3-00"
 kubelet_version="1.26.3-00"
 kubectl_version="1.26.3-00"
 download_image_script="images-down.sh"
-apiserver_address="192.168.0.131"
+apiserver_address="192.168.0.57"
 apiserver_port=6443
 version="v1.26.3"
 pod_network="10.100.0.0/16"
@@ -35,18 +42,18 @@ service_dns_domain="cluster.local"
 
 [master]
 sys_username = "root"
-sys_password = "Root@123"
-sys_host = "8.148.12.129"
+sys_password = "Hu_900515"
+sys_host = "8.148.10.17"
 sys_port = 22
 
 [node1]
 sys_username = "root"
-sys_password = "Root@123"
-sys_host = "8.148.11.1"
+sys_password = "Hu_900515"
+sys_host = "8.148.12.157"
 sys_port = 22
 
 [node2]
 sys_username = "root"
-sys_password = "Root@123"
-sys_host = "8.148.10.57"
+sys_password = "Hu_900515"
+sys_host = "8.148.12.239"
 sys_port = 22

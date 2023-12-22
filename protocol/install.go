@@ -34,7 +34,11 @@ func Newk8sInstallSvc() *K8sInstallSvc {
 func (m *K8sInstallSvc) K8sInstall(ctx context.Context) error {
 	// master节点安装containerd
 	logger.L().Info().Msgf("======主节点开始安装Containerd======")
-	err := m.masterSvc.UploadContainerdInstallFile(ctx)
+	err := m.masterSvc.UploadContainerdCompressInstallFile(ctx)
+	if err != nil {
+		return err
+	}
+	err = m.masterSvc.UncompressContainerdInstallFIle(ctx)
 	if err != nil {
 		return err
 	}
@@ -49,7 +53,11 @@ func (m *K8sInstallSvc) K8sInstall(ctx context.Context) error {
 	logger.L().Info().Msgf("======主节点安装Containerd成功======")
 	// node1节点安装containerd
 	logger.L().Info().Msgf("======Node1节点开始安装Containerd======")
-	err = m.node1Svc.UploadContainerdInstallFile(ctx)
+	err = m.node1Svc.UploadContainerdCompressInstallFile(ctx)
+	if err != nil {
+		return err
+	}
+	err = m.node1Svc.UncompressContainerdInstallFIle(ctx)
 	if err != nil {
 		return err
 	}
@@ -64,7 +72,11 @@ func (m *K8sInstallSvc) K8sInstall(ctx context.Context) error {
 	logger.L().Info().Msgf("======Node1节点安装Containerd成功======")
 	// node2节点安装containerd
 	logger.L().Info().Msgf("======Node2节点开始安装Containerd======")
-	err = m.node2Svc.UploadContainerdInstallFile(ctx)
+	err = m.node2Svc.UploadContainerdCompressInstallFile(ctx)
+	if err != nil {
+		return err
+	}
+	err = m.node2Svc.UncompressContainerdInstallFIle(ctx)
 	if err != nil {
 		return err
 	}

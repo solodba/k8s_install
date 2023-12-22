@@ -8,48 +8,24 @@ import (
 	"github.com/solodba/mcube/logger"
 )
 
-// 上传docker安装文件
-func (i *impl) UploadDockerInstallFile(context.Context) error {
-	_, err := i.c.Node2.UploadFile(i.c.Docker.LimitsFile, i.c.Docker.LimitsFilePath())
+// 上传docker压缩安装文件
+func (i *impl) UploadDockerCompressInstallFile(context.Context) error {
+	_, err := i.c.Node2.UploadFile(i.c.Docker.CompressInstallFile, i.c.Docker.DockerCompressInstallFilePath())
 	if err != nil {
 		return err
 	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.LimitsFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.SysctlFile, i.c.Docker.SysctlFilePath())
+	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.CompressInstallFile)
+	return nil
+}
+
+// 解压docker压缩安装文件
+func (i *impl) UncompressDockerInstallFIle(context.Context) error {
+	cmd := fmt.Sprintf(`/bin/bash -c "tar -zxf %s -C %s"`, i.c.Docker.DockerCompressInstallFilePath(), i.c.Docker.BaseDir)
+	_, err := i.c.Node2.RunShell(cmd)
 	if err != nil {
 		return err
 	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.SysctlFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.DockerBinaryFile, i.c.Docker.DockerBinaryFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.DockerBinaryFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.DockerDaemonFile, i.c.Docker.DockerDaemonFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.DockerDaemonFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.ContainerdServiceFile, i.c.Docker.ContainerdServiceFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.ContainerdServiceFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.DockerServiceFile, i.c.Docker.DockerServiceFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.DockerServiceFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.DockerSocketFile, i.c.Docker.DockerSocketFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.DockerSocketFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.DockerComposeFile, i.c.Docker.DockerComposeFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.DockerComposeFile)
+	logger.L().Info().Msgf("%s文件解压完成!", i.c.Docker.CompressInstallFile)
 	return nil
 }
 
@@ -140,58 +116,24 @@ func (i *impl) UbuntuDockerInstall(ctx context.Context) error {
 	return nil
 }
 
-// 上传containerd安装文件
-func (i *impl) UploadContainerdInstallFile(context.Context) error {
-	_, err := i.c.Node2.UploadFile(i.c.Docker.LimitsFile, i.c.Docker.LimitsFilePath())
+// 上传containerd压缩文件
+func (i *impl) UploadContainerdCompressInstallFile(context.Context) error {
+	_, err := i.c.Node2.UploadFile(i.c.Containerd.CompressInstallFile, i.c.Containerd.ContainerdCompressInstallFilePath())
 	if err != nil {
 		return err
 	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.LimitsFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.SysctlFile, i.c.Docker.SysctlFilePath())
+	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.CompressInstallFile)
+	return nil
+}
+
+// 解压Containerd压缩安装文件
+func (i *impl) UncompressContainerdInstallFIle(context.Context) error {
+	cmd := fmt.Sprintf(`/bin/bash -c "tar -zxf %s -C %s"`, i.c.Containerd.ContainerdCompressInstallFilePath(), i.c.Containerd.BaseDir)
+	_, err := i.c.Node2.RunShell(cmd)
 	if err != nil {
 		return err
 	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.SysctlFile)
-	_, err = i.c.Node2.UploadFile(i.c.Docker.ContainerdServiceFile, i.c.Docker.ContainerdServiceFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Docker.ContainerdServiceFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.ContainerdFile, i.c.Containerd.ContainerdFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.ContainerdFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.ContainerdConfigFile, i.c.Containerd.ContainerdConfigFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.ContainerdConfigFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.NerdctlFile, i.c.Containerd.NerdctlFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.NerdctlFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.NerdctlConfigFile, i.c.Containerd.NerdctlConfigFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.NerdctlConfigFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.CniFile, i.c.Containerd.CniFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.CniFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.RuncFile, i.c.Containerd.RuncFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.RuncFile)
-	_, err = i.c.Node2.UploadFile(i.c.Containerd.IpvsModuleFile, i.c.Containerd.IpvsModuleFilePath())
-	if err != nil {
-		return err
-	}
-	logger.L().Info().Msgf("%s文件上传成功!", i.c.Containerd.IpvsModuleFile)
+	logger.L().Info().Msgf("%s文件解压完成!", i.c.Containerd.CompressInstallFile)
 	return nil
 }
 
@@ -204,13 +146,13 @@ func (i *impl) UbuntuContainerdInstall(context.Context) error {
 	}
 	if strings.TrimRight(res, "\n") == "Ubuntu" {
 		logger.L().Info().Msgf("当前系统是Ubuntu,即将开始系统初始化、安装配置containerd")
-		cmd = fmt.Sprintf(`/bin/bash -c "cp %s /etc/security/limits.conf"`, i.c.Docker.LimitsFilePath())
+		cmd = fmt.Sprintf(`/bin/bash -c "cp %s /etc/security/limits.conf"`, i.c.Containerd.LimitsFilePath())
 		_, err = i.c.Node2.RunShell(cmd)
 		if err != nil {
 			return err
 		}
 		logger.L().Info().Msgf("limits.conf文件配置完成!")
-		cmd = fmt.Sprintf(`/bin/bash -c "cp %s /etc/sysctl.conf;modprobe ip_conntrack;modprobe br_netfilter;sysctl -p"`, i.c.Docker.SysctlFilePath())
+		cmd = fmt.Sprintf(`/bin/bash -c "cp %s /etc/sysctl.conf;modprobe ip_conntrack;modprobe br_netfilter;sysctl -p"`, i.c.Containerd.SysctlFilePath())
 		_, err = i.c.Node2.RunShell(cmd)
 		if err != nil {
 			return err
@@ -246,12 +188,12 @@ func (i *impl) UbuntuContainerdInstall(context.Context) error {
 			return err
 		}
 		logger.L().Info().Msgf("%s文件拷贝完成!", i.c.Containerd.ContainerdConfigFile)
-		cmd = fmt.Sprintf(`/bin/bash -c "cp %s /lib/systemd/system/containerd.service"`, i.c.Docker.ContainerdServiceFilePath())
+		cmd = fmt.Sprintf(`/bin/bash -c "cp %s /lib/systemd/system/containerd.service"`, i.c.Containerd.ContainerdServiceFilePath())
 		_, err = i.c.Node2.RunShell(cmd)
 		if err != nil {
 			return err
 		}
-		logger.L().Info().Msgf("%s文件拷贝完成!", i.c.Docker.ContainerdServiceFile)
+		logger.L().Info().Msgf("%s文件拷贝完成!", i.c.Containerd.ServiceFile)
 		cmd = fmt.Sprintf(`/bin/bash -c "mkdir /opt/cni/bin -p"`)
 		_, err = i.c.Node2.RunShell(cmd)
 		if err != nil {
